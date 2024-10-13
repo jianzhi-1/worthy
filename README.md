@@ -29,7 +29,7 @@ In three different terminals, start the Realtime API backend (JavaScript), then 
 cd realtime-backend
 npm start
 ```
-You can check the successful running of the backend by going to: `http://localhost:3000`
+You can check the successful running of the backend by going to: `http://localhost:3000`. Note that to run this successfully, you may have to enable some Chrome permissions (microphone access and `Insecure origins treated as secure` in `chrome://flags/#unsafely-treat-insecure-origin-as-secure`: `http://localhost:3000,ws://localhost:8081`).
 
 ```shell
 python3 emotion_state_backend.py
@@ -51,6 +51,9 @@ Automatically fulfilled by RealTime API. Guarantees robust performance - allows 
 
 3. 🤨 Emotion states and transitions
 Edgeworth usually appears reserved, but there are times where he might be "shocked"! Can you find those scenarios? Emotion inference is done through GPT text completion and the transition is done via an API call to the Flask backend. 
+
+### Statistics
+The building of the entire application (including the trialling of Realtime APIs, DALL-E image generation, GPT prompting, videoing) took around 7 hours and $17.88 OpenAI credits.
 
 ### Resources
 - [OpenAI API Reference](https://platform.openai.com/docs/api-reference/introduction)
