@@ -3,8 +3,6 @@ Pear VC Hack 2024 🍐
 
 ### Resources
 [OpenAI API Reference](https://platform.openai.com/docs/api-reference/introduction)
-[Maya Fey Sprites](https://aceattorney.fandom.com/wiki/Maya_Fey_-_Sprite_Gallery)
-[Maya Fey Sprites](https://aceattorney.fandom.com/wiki/Maya_Fey_-_Sprite_Gallery#Without_Hood_)
 [Edgeworth Sprites](https://aceattorney.fandom.com/wiki/Miles_Edgeworth_-_Sprite_Gallery#Chief_Prosecutor_(SoJ))
 
 ### Basic Description of Idea
@@ -22,29 +20,25 @@ The other aspects involve making this conversation environment nicer:
 
 ### Breakdown of Idea
 
-1. Voice (Jianzhi) + Chat Integration (Jianzhi)
+1. Voice + Chat Integration
 Mainly use RealTime API
 - seems quite comprehensive, receive input audio, commit
 - Should interrupt? If yes, interrupt, emit. If receive some more, pause, push emit back into stack for next emission
 - Speech update
-This part may take at least **8** hours.
 
 2. Thought-Image Generation
-This part may take ~2 hours hours.
+
 Given AI bot's speech (in text), generate an image that most closely match what the bot is thinking.
 
-4. Background-Image Generation
-This part might take at least 4 hours.
+3. Background-Image Generation
 Given user's background / back ground suggestion, match the background for the application.
 
-5. Chat
-This part should take maximally 1 hour if everything else is done correctly. Just display a UI for chat. Don't need do this if no time. Not exciting.
+4. Chat
+Automatically done by Realtime API.
 
-6. Avatar (Hopefully Jin Wei, since he has graphics knowledge)
-This part may take ~3-4 hours. Ask ChatGPT to generate the website (maybe this will work)
+5. Avatar
 
-- https://www.reddit.com/r/vndevs/comments/esyt4e/emotional_ranges_of_sprites_referencechecklist/
-- https://sketchfab.com/
+Edgeworth himself.
 
-8. Demo
+6. Demo
 ??
