@@ -3,6 +3,8 @@ Pear VC Hack 2024 🍐
 
 A visually appealing OpenAI-powered (Realtime, DALL-E, GPT) companion, capable of real-time conversations and emotional reactions. See [Demo](https://www.youtube.com/watch?v=XSTgHln8Upg)!
 
+![Edgeworth Image](./app_image.png)
+
 ### Set up
 
 #### Installation
