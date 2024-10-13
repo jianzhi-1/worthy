@@ -1,17 +1,10 @@
 from flask import Flask, request, jsonify
 from openai import OpenAI
-import pygame
-from PIL import Image
-import threading
-import os
 import json
 
 app = Flask(__name__)
 client = OpenAI(api_key="<API_KEY>")
 state = "NORMAL"
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
 
 @app.route("/getEmotion", methods=['GET'])
 def getEmotion():
@@ -31,9 +24,6 @@ def setEmotion():
         pass
     resp = jsonify(success=True)
     resp.headers.add("Access-Control-Allow-Origin", "*")
-
-
-    # return new list for update on the frontend
 
     response = client.chat.completions.create(
         model="gpt-4o-2024-08-06",

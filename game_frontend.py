@@ -1,12 +1,12 @@
+from flask import Flask, request, jsonify
 import pygame
-from PIL import Image
+from PIL import Image, ImageFilter
+import threading
 import os
-import shutil
+import requests
 import io
 import json
-import os
 import openai
-from PIL import Image, ImageFilter
 import requests
 import time
 import shutil
@@ -15,15 +15,25 @@ openai.api_key = API_KEY
 
 background_url = "https://karenapp.io/books/zoom/images/gettingstartedwithzoom/virtualbackground/vbackground.jpg"
 
+state = None
+
 def main():
+    global state
     media_path = 'media/gifs'
     frames_path = 'media/frames'
     gif_names = [os.path.splitext(file)[0] for file in os.listdir(media_path) if os.path.isfile(os.path.join(media_path, file))]
     gif_frames = {}
+    # for gif_name in gif_names:
+    #     gif_frames[gif_name] = []
+    #     frames_dir = os.path.join(frames_path, gif_name)
+    #     frames = os.listdir(frames_dir)
+    #     for frame in sorted(os.listdir(frames_dir), key=lambda x: int(x[6:-4])):
+    #         frame_path = os.path.join(frames_dir, frame)
+    #         gif_frames[gif_name].append(pygame.image.load(frame_path))
 
     new_frames_path = "media/new_frames"
     if not os.path.exists(new_frames_path):
-        os.makdirs(new_frames_path)
+        os.makedirs(new_frames_path)
         for gif_name in gif_names:
             gif_frames[gif_name] = []
             new_frames_gifs_path = os.path.join(new_frames_path, gif_name)
@@ -55,32 +65,48 @@ def main():
         '0': 'bowing'
     }
 
+    emotion_mapping = {
+        "SHOCKED":'9', 
+        "THANKFUL":'0', 
+        "NORMAL":'2',
+        "THINKING":'6', 
+        "DETERMINED":'4'
+    }
+
     pygame.init()
     screen = pygame.display.set_mode((800, 800))
     pygame.display.set_caption('GIF Player')
 
     running = True
+    counter = 0
     clock = pygame.time.Clock()
     frame_index = 0
     current_gif = 'normal'
+    same_as_prev_counter = 0
+    prev_state = None
+    frozen = 0
     while running:
+        counter += 1
+        frozen = max(frozen - 1, 0)
+        if counter % 10 == 0 and frozen == 0:
+            r = requests.get('http://127.0.0.1:5000/getEmotion')
+            state = r.json()['emotion']
+            if state != prev_state:
+                frozen = 30
+                current_gif = key_to_gif_mapping['1' if state is None else emotion_mapping[state]]
+                frame_index = 0
+                prev_state = state
+        
         screen.fill((0, 0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-            if event.type == pygame.KEYDOWN:
-                if pygame.K_0 <= event.key <= pygame.K_9:
-                    number_pressed = event.key - pygame.K_0
-                    current_gif = key_to_gif_mapping[str(number_pressed)]
-                    frame_index = 0
 
         screen.blit(gif_frames[current_gif][frame_index], (0, 0))
         pygame.display.flip()
         frame_index = (frame_index + 1) % len(gif_frames[current_gif])
         clock.tick(30)  # Control FPS
     pygame.quit()
-
 
 def save_image_from_prompt(fname, response):
     if response.status_code == 200:
@@ -170,3 +196,4 @@ def end_to_end(background_url, frame, new_frame):
 
 if __name__ == '__main__':
     main()
+    

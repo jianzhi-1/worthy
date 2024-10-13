@@ -1,16 +1,15 @@
-# media
-/media
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/realtime-backend/node_modules
-/realtime-backend/.pnp
+/node_modules
+/.pnp
 .pnp.js
 
 # testing
-/realtime-backend/coverage
+/coverage
 
 # production
-/realtime-backend/build
+/build
 
 # packaging
 *.zip
